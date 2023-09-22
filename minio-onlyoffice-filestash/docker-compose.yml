@@ -1,0 +1,29 @@
+services:
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    restart: always
+    command: server /data --console-address ":9090" --ftp="address=:8021" --ftp="passive-port-range=30000-40000"
+    ports:
+      - 9000:9000
+      - 9090:9090
+      - 8021:8021
+    environment:
+      - MINIO_ROOT_USER=boyifan
+      - MINIO_ROOT_PASSWORD=Byf2012120
+    volumes:
+      - /home/minio/data:/data
+
+  web:
+    image: machines/filestash
+    ports:
+      - 80:8334
+    restart: always
+
+  onlyoffice:
+    image: onlyoffice/documentserver:7.3
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      - JWT_ENABLED="false"

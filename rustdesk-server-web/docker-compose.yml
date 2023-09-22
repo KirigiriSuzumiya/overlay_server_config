@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  hbbs:
+    container_name: hbbs
+    image: rustdesk/rustdesk-server:latest
+    command: hbbs
+    volumes:
+      - ./data:/root
+    network_mode: "host"
+    depends_on:
+      - hbbr
+    restart: unless-stopped
+
+
+  hbbr:
+    container_name: hbbr
+    image: rustdesk/rustdesk-server:latest
+    command: hbbr
+    volumes:
+      - ./data:/root
+    network_mode: "host"
+    restart: unless-stopped
+
+
+  web:
+    container_name: web
+    image: keyurbhole/flutter_web_desk:v1.0.0
+    restart: unless-stopped
+    ports:
+      - 5000:5000
