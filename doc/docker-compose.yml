@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  docuseal:
+    image: docuseal/docuseal:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - ./docuseal_data:/data
+    restart: unless-stopped
+  
+  docsify:
+    image: sujaykumarh/docsify:latest
+    ports:
+      - 80:3000
+    command: serve --livereload-port=3000
+    volumes:
+      - ./docs:/docs
+    restart: unless-stopped
